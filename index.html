@@ -39,3 +39,18 @@ function jump(){if(state==="jogando"&&jumpH===0)jumpV=15}
 function gameOver(){state="dead";show('<div style="font-size:42px">💥</div><h1>Você caiu!</h1><p>Distância: <b>'+Math.floor(distance)+' m</b></p><p>Checkpoint salvo: <b>'+checkpoint+' m</b></p><div class="buttons"><button class="btn" data-act="respawn">↻ Voltar ao checkpoint</button><button class="btn alt" data-act="menu">Menu</button></div>')}
 window.addEventListener("keydown",e=>{if(e.code==="Space"||e.key==="ArrowUp"){e.preventDefault();jump()}});canvas.addEventListener("pointerdown",jump);updateHUD();draw();mainMenu();
 </script></body></html>
+
+<script>
+(function(){
+  var mobileStyle=document.createElement("style");
+  mobileStyle.textContent="#mobileJump{display:none;position:absolute;right:16px;bottom:16px;z-index:1;width:82px;height:82px;border:2px solid #ffffffaa;border-radius:50%;background:#ffd85bee;color:#292333;font-weight:bold;font-size:24px;place-content:center;text-align:center;box-shadow:0 5px 0 #a77924;touch-action:none;user-select:none;-webkit-user-select:none}.frame{touch-action:none}.hud{z-index:2}.layer{z-index:3}@media(max-width:700px){#mobileJump{display:grid}}#mobileJump small{display:block;font-size:11px;letter-spacing:.06em}";
+  document.head.appendChild(mobileStyle);
+  var button=document.createElement("button");
+  button.id="mobileJump";button.type="button";button.setAttribute("aria-label","Pular");
+  button.innerHTML="⬆<small>PULAR</small>";
+  document.querySelector(".frame").appendChild(button);
+  button.addEventListener("pointerdown",function(event){event.preventDefault();if(typeof jump==="function")jump();},{passive:false});
+  var canvas=document.getElementById("game");
+  canvas.addEventListener("pointerdown",function(event){event.preventDefault();},{passive:false});
+})();
+</script>
